@@ -1,10 +1,20 @@
-FROM jorge07/alpine-php:8.1-dev
-RUN apk add bash
-EXPOSE 80
+# Use the official PHP 8.0 image as the base
+FROM php:8.0-apache
 
-WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    unzip \
+    && docker-php-ext-install zip pdo_mysql
 
-COPY ./flag.txt /
-COPY ./index.php /app
+# Enable Apache rewrite module
+RUN a2enmod rewrite
 
-CMD ["php", "-S", "0.0.0.0:80"]
+# Set the document root to Laravel's public directory
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+# Copy the application files to the container
+COPY . /var/www/html
+
+# Set the working directory
+WORKDIR /var/www/html

